@@ -1,0 +1,14 @@
+version: 1.0.{build}
+image: Visual Studio 2017
+nuget:
+  disable_publish_on_pr: true
+build:
+  verbosity: minimal  
+deploy:
+  provider: NuGet  
+  api_key:
+    secure: OHher9MQYcKNN+UPFP05thonnDs8t/8kq91EYXkFLqeDxsIAD4jZZV+RmeZhLrHP
+  skip_symbols: false  
+  artifact: /.*\.nupkg/ 
+  on:
+    branch: master  

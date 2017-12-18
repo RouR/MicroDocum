@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp1.0;netcoreapp1.1;netcoreapp2.0;net35;net40;net45;net451;net452;net46;net461;net462;net47;netstandard1.5;netstandard1.6;netstandard2.0</TargetFrameworks>
+    <IncludeSymbols>True</IncludeSymbols>
+    <IncludeSource>True</IncludeSource>
+    <Description>Tool for automatic generation of documentation in the form of images.
+Using Reflections. Find all the classes, which have a custom attribute. Get their links in the form of a graph. Generate file for GraphViz. Visualize your links between DTO.
+Customize colors and labels.</Description>
+    <Authors>RouR</Authors>
+    <Company />
+    <PackageTags>Documentation Discovery Docs Reflection GraphViz Graph Generator</PackageTags>
+    <PackageLicenseUrl>https://github.com/RouR/MicroDocum/blob/master/LICENSE</PackageLicenseUrl>
+    <Copyright>RouR</Copyright>
+    <RepositoryUrl>https://github.com/RouR/MicroDocum</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MicroDocum.Analyzers\MicroDocum.Analyzers.csproj" />
+    <ProjectReference Include="..\MicroDocum.Graphviz\MicroDocum.Graphviz.csproj" />
+  </ItemGroup>
+
+</Project>
