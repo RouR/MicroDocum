@@ -2,8 +2,19 @@ version: 1.0.{build}
 image: Visual Studio 2017
 nuget:
   disable_publish_on_pr: true
-build:
-  verbosity: minimal  
+before_build:
+  - dotnet restore
+build_script:
+  - choco install "msbuild-sonarqube-runner" -y
+  - MSBuild.SonarQube.Runner.exe begin /k:"microdocum" /d:sonar.organization="rour-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="ffb0b2b9d22666f5639ed823f42c2bf92c4f964e"
+  - dotnet build
+  - MSBuild.SonarQube.Runner.exe end /d:sonar.login="ffb0b2b9d22666f5639ed823f42c2bf92c4f964e"
+test_script:
+    - dotnet test
+artifacts:
+    - path: artifacts\**\*.*
+cache:
+    - '%USERPROFILE%\.nuget\packages'  
 deploy:
   provider: NuGet  
   api_key:
