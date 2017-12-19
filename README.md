@@ -1,7 +1,14 @@
 # MicroDocum
 
 [![Build status](https://ci.appveyor.com/api/projects/status/2x7gb0ggy8qac5lw/branch/master?svg=true)](https://ci.appveyor.com/project/RouR/microdocum/branch/master)
-[![AppVeyor tests](https://img.shields.io/appveyor/tests/NZSmartie/coap-net-iu0to.svg)](https://ci.appveyor.com/api/projects/status/2x7gb0ggy8qac5lw)
+[![AppVeyor tests](https://img.shields.io/appveyor/tests/RouR/microdocum.svg)](https://ci.appveyor.com/project/RouR/microdocum/build/tests)
+[![Quality Gate](https://sonarcloud.io/api/badges/gate?key=microdocum)](https://sonarcloud.io/dashboard?id=microdocum)
+[![Quality Gate](https://sonarcloud.io/api/badges/measure?key=microdocum&metric=code_smells)](https://sonarcloud.io/dashboard?id=microdocum)
+[![Quality Gate](https://sonarcloud.io/api/badges/measure?key=microdocum&metric=bugs)](https://sonarcloud.io/dashboard?id=microdocum)
+[![Quality Gate](https://sonarcloud.io/api/badges/measure?key=microdocum&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=microdocum)
+[![Quality Gate](https://sonarcloud.io/api/badges/measure?key=microdocum&metric=sqale_debt_ratio)](https://sonarcloud.io/dashboard?id=microdocum)
+
+[comment]: # (https://github.com/QualInsight/qualinsight-plugins-sonarqube-badges/wiki/Measure-badges)
 
 Tool for automatic generation of documentation in the form of images. 
 Using Reflections. Find all the classes, which have a custom attribute. Get their links in the form of a graph. Generate file for GraphViz. 
