@@ -19,5 +19,7 @@ Customize colors and labels.</Description>
     <ProjectReference Include="..\MicroDocum.Analyzers\MicroDocum.Analyzers.csproj" />
     <ProjectReference Include="..\MicroDocum.Graphviz\MicroDocum.Graphviz.csproj" />
   </ItemGroup>
-
+ <PropertyGroup>
+		<FrameworkPathOverride Condition="'$(TargetFramework)' == 'net35'">C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v3.5\Profile\Client</FrameworkPathOverride>
+	</PropertyGroup>
 </Project>

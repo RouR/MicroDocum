@@ -18,4 +18,7 @@ Using Reflections. Find all the classes, which have a custom attribute. Get thei
   <ItemGroup>
     <ProjectReference Include="..\MicroDocum.Analyzers\MicroDocum.Analyzers.csproj" />
   </ItemGroup>
+   <PropertyGroup>
+		<FrameworkPathOverride Condition="'$(TargetFramework)' == 'net35'">C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v3.5\Profile\Client</FrameworkPathOverride>
+	</PropertyGroup>
 </Project>
