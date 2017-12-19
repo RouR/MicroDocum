@@ -13,7 +13,7 @@ build_script:
   - dotnet test Tests/MicroDocum.Themes.Tests
   - MSBuild.SonarQube.Runner.exe end /d:sonar.login="cbdf162317a340f70ceee07b9c6a21ec79dab3e1"   
 artifacts:
-    - path: '**\*.nupkg'
+    - path: '**\MicroDocum.*.nupkg'
 cache:
     - '%USERPROFILE%\.nuget\packages'  
 deploy:
@@ -21,6 +21,6 @@ deploy:
   api_key:
     secure: OHher9MQYcKNN+UPFP05thonnDs8t/8kq91EYXkFLqeDxsIAD4jZZV+RmeZhLrHP
   skip_symbols: false  
-  artifact: /.*\.nupkg/ 
+  artifact: /.*MicroDocum.*\.nupkg/ 
   on:
     branch: master  
