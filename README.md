@@ -7,6 +7,9 @@
 [![Quality Gate](https://sonarcloud.io/api/badges/measure?key=microdocum&metric=bugs)](https://sonarcloud.io/dashboard?id=microdocum)
 [![Quality Gate](https://sonarcloud.io/api/badges/measure?key=microdocum&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=microdocum)
 [![Quality Gate](https://sonarcloud.io/api/badges/measure?key=microdocum&metric=sqale_debt_ratio)](https://sonarcloud.io/dashboard?id=microdocum)
+[![NuGet](https://img.shields.io/nuget/v/MicroDocum.Analyzers.svg)](https://www.nuget.org/packages/MicroDocum.Analyzers/)
+[![NuGet](https://img.shields.io/nuget/v/MicroDocum.Graphviz.svg)](https://www.nuget.org/packages/MicroDocum.Graphviz/)
+[![NuGet](https://img.shields.io/nuget/v/MicroDocum.Themes.svg)](https://www.nuget.org/packages/MicroDocum.Themes/)
 
 [comment]: # (https://github.com/QualInsight/qualinsight-plugins-sonarqube-badges/wiki/Measure-badges)
 

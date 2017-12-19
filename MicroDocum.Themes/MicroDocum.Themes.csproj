@@ -13,6 +13,7 @@ Customize colors and labels.</Description>
     <PackageLicenseUrl>https://github.com/RouR/MicroDocum/blob/master/LICENSE</PackageLicenseUrl>
     <Copyright>RouR</Copyright>
     <RepositoryUrl>https://github.com/RouR/MicroDocum</RepositoryUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

@@ -11,6 +11,7 @@ Using Reflections. Find all the classes, which have a custom attribute. Get thei
     <PackageLicenseUrl>https://github.com/RouR/MicroDocum/blob/master/LICENSE</PackageLicenseUrl>
     <Copyright>RouR</Copyright>
     <RepositoryUrl>https://github.com/RouR/MicroDocum</RepositoryUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Enums\" />
