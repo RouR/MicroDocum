@@ -13,7 +13,7 @@ build_script:
   - dotnet test Tests/MicroDocum.Themes.Tests
   - MSBuild.SonarQube.Runner.exe end /d:sonar.login="cbdf162317a340f70ceee07b9c6a21ec79dab3e1"   
 artifacts:
-    - path: artifacts\**\*.*
+    - path: '**\*.nupkg'
 cache:
     - '%USERPROFILE%\.nuget\packages'  
 deploy:
