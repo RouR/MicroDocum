@@ -3,14 +3,17 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/2x7gb0ggy8qac5lw/branch/master?svg=true)](https://ci.appveyor.com/project/RouR/microdocum/branch/master)
 [![AppVeyor tests](https://img.shields.io/appveyor/tests/RouR/microdocum.svg)](https://ci.appveyor.com/project/RouR/microdocum/build/tests)
 [![Quality Gate](https://sonarcloud.io/api/badges/gate?key=microdocum)](https://sonarcloud.io/dashboard?id=microdocum)
+
 [![Quality Gate](https://sonarcloud.io/api/badges/measure?key=microdocum&metric=code_smells)](https://sonarcloud.io/dashboard?id=microdocum)
 [![Quality Gate](https://sonarcloud.io/api/badges/measure?key=microdocum&metric=bugs)](https://sonarcloud.io/dashboard?id=microdocum)
 [![Quality Gate](https://sonarcloud.io/api/badges/measure?key=microdocum&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=microdocum)
 [![Quality Gate](https://sonarcloud.io/api/badges/measure?key=microdocum&metric=sqale_debt_ratio)](https://sonarcloud.io/dashboard?id=microdocum)
 
-MicroDocum.Analyzers [![NuGet](https://img.shields.io/nuget/v/MicroDocum.Analyzers.svg)](https://www.nuget.org/packages/MicroDocum.Analyzers/)
-MicroDocum.Graphviz [![NuGet](https://img.shields.io/nuget/v/MicroDocum.Graphviz.svg)](https://www.nuget.org/packages/MicroDocum.Graphviz/)
-icroDocum.Themes [![NuGet](https://img.shields.io/nuget/v/MicroDocum.Themes.svg)](https://www.nuget.org/packages/MicroDocum.Themes/)
+[![NuGet](https://img.shields.io/nuget/v/MicroDocum.Analyzers.svg)](https://www.nuget.org/packages/MicroDocum.Analyzers/) MicroDocum.Analyzers 
+
+[![NuGet](https://img.shields.io/nuget/v/MicroDocum.Graphviz.svg)](https://www.nuget.org/packages/MicroDocum.Graphviz/) MicroDocum.Graphviz 
+
+[![NuGet](https://img.shields.io/nuget/v/MicroDocum.Themes.svg)](https://www.nuget.org/packages/MicroDocum.Themes/) MicroDocum.Themes 
 
 [comment]: # (https://github.com/QualInsight/qualinsight-plugins-sonarqube-badges/wiki/Measure-badges)
 
@@ -26,7 +29,7 @@ Visualize your links between DTO. Customize colors and labels.
 
 2. Mark your DTO with your custom attributes and custom interfaces
 
-```
+```cs
 [LabelAlt("altLabel")]
 [Tags("someTag")]
 [TagsAlt("altTag")]
@@ -38,24 +41,24 @@ public class Struct1 : IProduce<IInterface1>
 ```
 
 3. Analize your assembly
-```
+```cs
 var a = new AssemblyAnalizer<DefaultLinkStyle>(theme);
 var asm = AppDomain.CurrentDomain.GetAssemblies();
 var graph = a.Analize(asm, theme.GetAvailableThemeAttributes(), t => t.FullName?.StartsWith(_classname) ?? false);
 ```
 
 4. Generate Graphviz file
-```
+```cs
 var graphwizFileData = new GraphvizDotGenerator<DefaultLinkStyle>(theme);
 ```
 
 5. Visualize by online tool  https://dreampuf.github.io/GraphvizOnline/ or generate image locally 
-```
+```PowerShell
 Install-Package GraphViz.NET
 Install-Package GraphViz
 ```
 
-```
+```cs
 using GraphVizWrapper;
 using GraphVizWrapper.Commands;
 using GraphVizWrapper.Queries;
