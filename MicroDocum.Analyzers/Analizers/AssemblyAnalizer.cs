@@ -78,15 +78,15 @@ namespace MicroDocum.Analyzers.Analizers
 
                         foreach (var iface in interfaces)
                         {
-                            var linkTo = CompilerUtils.GenericTypeArgument(iface);
+                            var links = _theme.GetThemedLinks(iface, message);
 
-                            var linkInfo = _theme.DefaultRules(new LinkMetadata()
+                            if(links == null || links.Length == 0)
+                                continue;
+
+                            foreach (var linkMetadata in links)
                             {
-                                Link = iface.GetGenericTypeDefinition(),
-                                FromMessage = message,
-                                ToMessage = linkTo,
-                            });
-                            result.AddDirectedEdge(result[message.FullName], result[linkTo.FullName], linkInfo);
+                                result.AddDirectedEdge(result[message.FullName], result[linkMetadata.ToMessage.FullName], linkMetadata.Link);
+                            }
                         }
                     }
                 }

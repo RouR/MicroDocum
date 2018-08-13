@@ -38,9 +38,14 @@ namespace MicroDocum.Analyzers
                 .ToArray();
         }
 
-        public static Type GenericTypeArgument(Type type)
+        public static Type[] GenericTypeArguments(Type type)
         {
-            return type.GetGenericArguments().Single();
+            return type.GetGenericArguments().ToArray();
+        }
+
+        public static bool IsGeneric(Type type)
+        {
+            return type.IsGenericType;
         }
 
         public static bool CheckHasFlag(this Enum variable, Enum value)
@@ -111,9 +116,15 @@ namespace MicroDocum.Analyzers
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Type GenericTypeArgument(Type type)
+        public static Type[] GenericTypeArguments(Type type)
         {
-            return type.GenericTypeArguments.Single();
+            return type.GenericTypeArguments.ToArray();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsGeneric(Type type)
+        {
+            return type.GetTypeInfo().IsGenericType;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

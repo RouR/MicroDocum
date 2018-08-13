@@ -7,7 +7,7 @@ namespace MicroDocum.Analyzers.Interfaces
     {
         Type[] GetAvailableThemeAttributes();
 
-        LinkInfo<TLinkStyle> DefaultRules(LinkMetadata meta);
+        LinkMetadata<TLinkStyle>[] GetThemedLinks(Type iface, Type fromMessage);
        
     }
 }
