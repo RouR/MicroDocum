@@ -22,5 +22,7 @@ Customize colors and labels.</Description>
   </ItemGroup>
  <PropertyGroup>
 		<FrameworkPathOverride Condition="'$(TargetFramework)' == 'net35'">C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v3.5\Profile\Client</FrameworkPathOverride>
+		<Version>1.1.0</Version>
+		<PackageProjectUrl>https://github.com/RouR/MicroDocum</PackageProjectUrl>
 	</PropertyGroup>
 </Project>
