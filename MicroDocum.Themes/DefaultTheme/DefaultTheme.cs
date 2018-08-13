@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using MicroDocum.Analyzers;
 using MicroDocum.Analyzers.Models;
 using MicroDocum.Graphviz.Interfaces;
 using MicroDocum.Graphviz.Models;
@@ -22,7 +24,7 @@ namespace MicroDocum.Themes.DefaultTheme
             };
         }
 
-        public LinkInfo<DefaultLinkStyle> DefaultRules(LinkMetadata meta)
+        public LinkMetadata<DefaultLinkStyle>[] GetThemedLinks(Type iface, Type fromMessage)
         {
             var dict = new Dictionary<Type, LinkInfo<DefaultLinkStyle>>
             {
@@ -30,6 +32,12 @@ namespace MicroDocum.Themes.DefaultTheme
                     typeof(IProduce<>), new LinkInfo<DefaultLinkStyle>
                     {
                         Style = DefaultLinkStyle.Default
+                    }
+                },
+                {
+                    typeof(IProduce<,>), new LinkInfo<DefaultLinkStyle>
+                    {
+                        Style = DefaultLinkStyle.Default | DefaultLinkStyle.Dot
                     }
                 },
                 {
@@ -60,15 +68,41 @@ namespace MicroDocum.Themes.DefaultTheme
                 }
             };
 
-            var result = new LinkInfo<DefaultLinkStyle>()
+            if (!CompilerUtils.IsGeneric(iface))
+                return null;
+         
+            var genericType = iface.GetGenericTypeDefinition();
+
+            if (!dict.ContainsKey(genericType))
+                return null;
+                
+            var style = dict[genericType];
+
+            var result = new List<LinkMetadata<DefaultLinkStyle>>();
+
+            var argTypes = CompilerUtils.GenericTypeArguments(iface);
+
+            if(argTypes.Length > 1 && genericType == typeof(IProduce<,>))
+                foreach (var argType in argTypes)
+                {
+                    result.Add(new LinkMetadata<DefaultLinkStyle>()
+                    {
+                        FromMessage = fromMessage,
+                        ToMessage = argType,
+                        Link = style
+                    });
+                }
+            else
             {
-                Style = DefaultLinkStyle.Default
-            };
+                result.Add(new LinkMetadata<DefaultLinkStyle>()
+                {
+                    FromMessage = fromMessage,
+                    ToMessage = argTypes.Single(),
+                    Link = style
+                });
+            }
 
-            if (dict.ContainsKey(meta.Link))
-                result = dict[meta.Link];
-
-            return result;
+            return result.ToArray();
         }
 
         public IList<LinkRule<LinkInfo<DefaultLinkStyle>>> DefaultLinkRules()
