@@ -4,9 +4,9 @@
 
 namespace MicroDocum.Analyzers.Models
 {
-    public struct LinkMetadata
+    public struct LinkMetadata<T>
     {
-        public Type Link { get; set; }
+        public LinkInfo<T> Link { get; set; }
         public Type FromMessage { get; set; }
         public Type ToMessage { get; set; }
     }
