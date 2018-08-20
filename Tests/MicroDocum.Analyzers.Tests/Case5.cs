@@ -179,8 +179,8 @@ namespace MicroDocum.Analyzers.Tests
             Assert.That(c.Nodes, Has.Exactly(10).Items);
             Assert.That(c.Edges, Has.Count.AtLeast(6));
             Assert.That(c.GetSingles(), Has.Count.EqualTo(1), "GetSingles");
-            Assert.That(c.GetHeads(), Has.Count.EqualTo(2), "GetHeads");
-            Assert.That(c.GetLeafs(), Has.Count.EqualTo(2), "GetLeafs");
+            Assert.That(c.GetHeads(), Has.Count.EqualTo(3), "GetHeads");
+            Assert.That(c.GetLeafs(), Has.Count.EqualTo(3), "GetLeafs");
         }
 
         [Test]
@@ -194,7 +194,7 @@ namespace MicroDocum.Analyzers.Tests
             //When
             var chains = c.SplitChains();
             //Then
-            Assert.That(chains, Has.Exactly(2).Items);
+            Assert.That(chains, Has.Exactly(4).Items);
         }
     }
 }
