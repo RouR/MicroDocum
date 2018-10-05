@@ -55,6 +55,12 @@ namespace MicroDocum.Analyzers.Models
                     throw new UnknownNodeException(to.Id);
             }
 
+            if (from.Id == to.Id)
+            {
+                //skip infinity loop
+                return;
+            }
+
             var forwardNodeIds = new List<string>();
             var backwardNodeIds = new List<string>();
             var isLoop = false;
@@ -183,9 +189,13 @@ namespace MicroDocum.Analyzers.Models
 
         private void VisitNodes(IChainNode<TN> head, Action<IChainNode<TN>> processNode)
         {
+            short infinityLoopDetector = short.MinValue;
             var checkNodes = new[] {head.Id};
             while (checkNodes.Length != 0)
             {
+                if(++infinityLoopDetector == short.MaxValue-1)
+                    throw new Exception("Infinity loop");
+
                 var newChildIds = new List<string>();
                 foreach (var node in checkNodes)
                 {
@@ -198,6 +208,7 @@ namespace MicroDocum.Analyzers.Models
                     foreach (var id in linkedTo)
                         processNode(this[id]);
                 }
+
                 checkNodes = newChildIds.Distinct().ToArray();
             }
         }
@@ -218,6 +229,7 @@ namespace MicroDocum.Analyzers.Models
                     foreach (var id in linkedTo)
                         processNode(this[id]);
                 }
+
                 checkNodes = newChildIds.Distinct().ToArray();
             }
         }
@@ -230,7 +242,7 @@ namespace MicroDocum.Analyzers.Models
             //var allLeafs = GetLeafs();
             var allSingles = GetSingles();
 
-            var nodes = Nodes;
+            var nodes = Nodes.ToList(); //create copy
 
             foreach (var node in allSingles)
             {
@@ -240,72 +252,66 @@ namespace MicroDocum.Analyzers.Models
                 nodes.Remove(node);
             }
 
-            var checkedLeafs = new Dictionary<string, string>();
-
-            foreach (var head in allHeads)
+            void AddNodeToChain(IChain<TN, TE> chain1, IChainNode<TN> chainNode)
             {
-                var leafs = SearchLeafs(head);
-                var leafsId = leafs.Select(x => x.Id).Distinct().ToList();
-                if (checkedLeafs.Keys.Any(x => leafsId.Contains(x)))
+                chain1.AddNode(chainNode);
+                foreach (var edge in Edges)
                 {
-                    //merge to chain
-                    var f = GetLeafs().Select(x => x.Id).ToList();
-                    var mapToHead = checkedLeafs.Where(x => f.Contains(x.Key)).Select(x => x.Value).Distinct();
-                    var chain = result.Single(c => c.GetHeads().Select(x => x.Id).Contains(mapToHead.Single()));
-                    foreach (var id in leafsId)
-                        if (!checkedLeafs.ContainsKey(id))
-                            checkedLeafs.Add(id, head.Id);
-                    if (chain.Nodes.All(x => x.Id != head.Id))
-                        chain.AddNode(head);
-                    VisitNodes(head, node =>
-                    {
-                        if (chain.Nodes.All(x => x.Id != node.Id))
-                            chain.AddNode(node);
+                    if (edge.FromId == chainNode.Id && chain1.Nodes.Any(x => x.Id == edge.ToId))
+                        chain1.AddDirectedEdge(chainNode, chain1.Nodes.Single(x => x.Id == edge.ToId), edge.Info);
 
-                        foreach (var edge in Edges.Where(x => x.FromId == node.Id || x.ToId == node.Id))
-                        {
-                            if (chain.Edges.Any(x => x.FromId == edge.FromId && x.ToId == edge.ToId))
-                                continue;
+                    if (edge.ToId == chainNode.Id && chain1.Nodes.Any(x => x.Id == edge.FromId))
+                        chain1.AddDirectedEdge(chain1.Nodes.Single(x => x.Id == edge.FromId), chainNode, edge.Info);
+                }
+            }
 
-                            {
-                                var from = chain[edge.FromId];
-                                var to = chain[edge.ToId];
-                                if (from != null && to != null)
-                                    chain.AddDirectedEdge(from, to, edge.Info);
-                            }
-                        }
-                    });
+            while (nodes.Any())
+            {
+                var checkedNode = nodes.First();
+                nodes.Remove(checkedNode);
+
+                var fromLinks = Edges.Where(x => x.ToId == checkedNode.Id).ToArray();
+                var toLinks = Edges.Where(x => x.FromId == checkedNode.Id).ToArray();
+                var nearestNodeIds = fromLinks.Select(x => x.FromId).Union(toLinks.Select(x => x.ToId))
+                    .Distinct()
+                    .ToArray();
+
+                var existChains = result.Where(x => x.Nodes.Any(n => nearestNodeIds.Contains(n.Id))).ToArray();
+                if (existChains.Length == 0)
+                {
+                    //create new chain
+                    var chain = new Chain<TN, TE> {CheckArguments = CheckArguments};
+                    result.Add(chain);
+
+                    chain.AddNode(checkedNode);
+                }
+                else if (existChains.Length == 1)
+                {
+                    //add to chain
+                    var chain = existChains.First();
+
+                    AddNodeToChain(chain, checkedNode);
                 }
                 else
                 {
-                    //new chain
-                    foreach (var id in leafsId)
-                        checkedLeafs.Add(id, head.Id);
+                    //merge chains and add to chain
                     var chain = new Chain<TN, TE> {CheckArguments = CheckArguments};
-
                     result.Add(chain);
 
-                    if (chain.Nodes.All(x => x.Id != head.Id))
-                        chain.AddNode(head);
-                    VisitNodes(head, node =>
+                    foreach (var oldChain in existChains)
                     {
-                        if (chain.Nodes.All(x => x.Id != node.Id))
-                            chain.AddNode(node);
-                        foreach (var edge in Edges.Where(x => x.FromId == node.Id || x.ToId == node.Id))
-                        {
-                            if (chain.Edges.Any(x => x.FromId == edge.FromId && x.ToId == edge.ToId))
-                                continue;
+                        foreach (var item in oldChain.Nodes)
+                            chain.Nodes.Add(item);
+                        foreach (var item in oldChain.Edges)
+                            chain.Edges.Add(item);
 
-                            {
-                                var from = chain[edge.FromId];
-                                var to = chain[edge.ToId];
-                                if (from != null && to != null)
-                                    chain.AddDirectedEdge(from, to, edge.Info);
-                            }
-                        }
-                    });
+                        result.Remove(oldChain);
+                    }
+
+                    AddNodeToChain(chain, checkedNode);
                 }
             }
+
 
             return result;
         }

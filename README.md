@@ -2,12 +2,13 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/2x7gb0ggy8qac5lw/branch/master?svg=true)](https://ci.appveyor.com/project/RouR/microdocum/branch/master)
 [![AppVeyor tests](https://img.shields.io/appveyor/tests/RouR/microdocum.svg)](https://ci.appveyor.com/project/RouR/microdocum/build/tests)
-[![Quality Gate](https://sonarcloud.io/api/badges/gate?key=microdocum)](https://sonarcloud.io/dashboard?id=microdocum)
 
-[![Quality Gate](https://sonarcloud.io/api/badges/measure?key=microdocum&metric=code_smells)](https://sonarcloud.io/dashboard?id=microdocum)
-[![Quality Gate](https://sonarcloud.io/api/badges/measure?key=microdocum&metric=bugs)](https://sonarcloud.io/dashboard?id=microdocum)
-[![Quality Gate](https://sonarcloud.io/api/badges/measure?key=microdocum&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=microdocum)
-[![Quality Gate](https://sonarcloud.io/api/badges/measure?key=microdocum&metric=sqale_debt_ratio)](https://sonarcloud.io/dashboard?id=microdocum)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=microdocum&metric=code_smells)](https://sonarcloud.io/dashboard?id=microdocum)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=microdocum&metric=bugs)](https://sonarcloud.io/dashboard?id=microdocum)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=microdocum&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=microdocum)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=microdocum&metric=security_rating)](https://sonarcloud.io/dashboard?id=microdocum)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=microdocum&metric=sqale_index)](https://sonarcloud.io/dashboard?id=microdocum)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=microdocum&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=microdocum)
 
 [![NuGet](https://img.shields.io/nuget/v/MicroDocum.Analyzers.svg)](https://www.nuget.org/packages/MicroDocum.Analyzers/) MicroDocum.Analyzers 
 
