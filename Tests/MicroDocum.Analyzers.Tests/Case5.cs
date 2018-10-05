@@ -48,7 +48,7 @@ namespace MicroDocum.Analyzers.Tests
             public bool Data { get; set; }
         }
         [ServiceName("Web")]
-        private class ListTODORequest : IPaginationSetting
+        private class ListTODORequest : IPaginationSetting, IProduce<ListTODO>
         {
             public int Page { get; set; }
             public int PageSize { get; set; }
@@ -176,9 +176,9 @@ namespace MicroDocum.Analyzers.Tests
             //When
             var c = a.Analize(asm, theme.GetAvailableThemeAttributes(), t => t.FullName?.StartsWith(/*"MicroDocum.Analyzers.Tests.Case1+"*/_classname) ?? false);
             //Then
-            Assert.That(c.Nodes, Has.Exactly(10).Items);
-            Assert.That(c.Edges, Has.Count.AtLeast(6));
-            Assert.That(c.GetSingles(), Has.Count.EqualTo(1), "GetSingles");
+            Assert.That(c.Nodes.Count, Is.EqualTo(10));
+            Assert.That(c.Edges.Count, Is.EqualTo(8));
+            Assert.That(c.GetSingles(), Has.Count.EqualTo(0), "GetSingles");
             Assert.That(c.GetHeads(), Has.Count.EqualTo(3), "GetHeads");
             Assert.That(c.GetLeafs(), Has.Count.EqualTo(3), "GetLeafs");
         }

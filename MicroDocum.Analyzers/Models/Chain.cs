@@ -55,6 +55,12 @@ namespace MicroDocum.Analyzers.Models
                     throw new UnknownNodeException(to.Id);
             }
 
+            if (from.Id == to.Id)
+            {
+                //skip infinity loop
+                return;
+            }
+
             var forwardNodeIds = new List<string>();
             var backwardNodeIds = new List<string>();
             var isLoop = false;
@@ -183,9 +189,13 @@ namespace MicroDocum.Analyzers.Models
 
         private void VisitNodes(IChainNode<TN> head, Action<IChainNode<TN>> processNode)
         {
+            short infinityLoopDetector = short.MinValue;
             var checkNodes = new[] {head.Id};
             while (checkNodes.Length != 0)
             {
+                if(++infinityLoopDetector == short.MaxValue-1)
+                    throw new Exception("Infinity loop");
+
                 var newChildIds = new List<string>();
                 foreach (var node in checkNodes)
                 {
