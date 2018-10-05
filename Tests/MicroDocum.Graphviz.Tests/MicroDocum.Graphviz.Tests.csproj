@@ -5,9 +5,8 @@
   <ItemGroup>
     <PackageReference Include="Graphviz" Version="2.38.0.2" />
     <PackageReference Include="GraphViz.NET" Version="1.0.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
-    <PackageReference Include="NUnit" Version="3.9.0" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.9.0" />
+    <PackageReference Include="NUnit" Version="3.10.1" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.10.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MicroDocum.Analyzers\MicroDocum.Analyzers.csproj" />

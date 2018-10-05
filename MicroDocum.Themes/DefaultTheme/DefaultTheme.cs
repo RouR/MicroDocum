@@ -180,7 +180,6 @@ namespace MicroDocum.Themes.DefaultTheme
             return labelText;
         }
 
-        // ReSharper disable once FieldCanBeMadeReadOnly.Global
-        public static Dictionary<string,List<string>> ServiceNames = new Dictionary<string, List<string>>();
+        internal static Dictionary<string,List<string>> ServiceNames = new Dictionary<string, List<string>>();
     }
 }
