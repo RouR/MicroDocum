@@ -194,7 +194,7 @@ namespace MicroDocum.Analyzers.Models
             while (checkNodes.Length != 0)
             {
                 if(++infinityLoopDetector == short.MaxValue-1)
-                    throw new Exception("Infinity loop");
+                    throw new InfinityLoopException();
 
                 var newChildIds = new List<string>();
                 foreach (var node in checkNodes)
@@ -215,9 +215,13 @@ namespace MicroDocum.Analyzers.Models
 
         private void VisitNodesBack(IChainNode<TN> leaf, Action<IChainNode<TN>> processNode)
         {
+            short infinityLoopDetector = short.MinValue;
             var checkNodes = new[] {leaf.Id};
             while (checkNodes.Length != 0)
             {
+                if(++infinityLoopDetector == short.MaxValue-1)
+                    throw new InfinityLoopException();
+
                 var newChildIds = new List<string>();
                 foreach (var node in checkNodes)
                 {
@@ -238,8 +242,6 @@ namespace MicroDocum.Analyzers.Models
         {
             var result = new List<IChain<TN, TE>>();
 
-            var allHeads = GetHeads();
-            //var allLeafs = GetLeafs();
             var allSingles = GetSingles();
 
             var nodes = Nodes.ToList(); //create copy
