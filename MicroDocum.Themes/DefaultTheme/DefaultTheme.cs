@@ -69,12 +69,12 @@ namespace MicroDocum.Themes.DefaultTheme
             };
 
             if (!CompilerUtils.IsGeneric(iface))
-                return null;
+                return new LinkMetadata<DefaultLinkStyle>[0];
          
             var genericType = iface.GetGenericTypeDefinition();
 
             if (!dict.ContainsKey(genericType))
-                return null;
+                return new LinkMetadata<DefaultLinkStyle>[0];
                 
             var style = dict[genericType];
 

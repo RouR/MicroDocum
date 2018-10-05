@@ -21,11 +21,13 @@ namespace MicroDocum.Analyzers.Analizers
             var ret = new List<Type>();
             ret.AddRange(types);
 
-            foreach (var item1 in types)
-            foreach (var parent in types.Where(x=> x != item1))
+            foreach (var type in types)
             {
-                if (item1.CheckIsAssignableFrom(parent))
-                    ret.Remove(parent);
+                foreach (var parent in types.Where(x=> x != type))
+                {
+                    if (type.CheckIsAssignableFrom(parent))
+                        ret.Remove(parent);
+                }
             }
 
             return ret.ToArray();

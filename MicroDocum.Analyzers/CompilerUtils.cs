@@ -76,7 +76,6 @@ namespace MicroDocum.Analyzers
         public static bool AttributeIs(Attribute customAttributeData, Type type)
         {
             return customAttributeData.GetType() == type;
-            //return customAttributeData.GetType() == type;
         }
 #else
 
@@ -141,7 +140,6 @@ namespace MicroDocum.Analyzers
         public static bool AttributeIs(Attribute customAttributeData, Type type)
         {
             return customAttributeData.GetType() == type;
-            //customAttributeData.GetType() == type; is wrong
         }
 #endif
 
