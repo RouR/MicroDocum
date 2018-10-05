@@ -194,7 +194,7 @@ namespace MicroDocum.Analyzers.Tests
             //When
             var chains = c.SplitChains();
             //Then
-            Assert.That(chains, Has.Exactly(4).Items);
+            Assert.That(chains, Has.Count.EqualTo(3));
         }
     }
 }

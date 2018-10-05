@@ -33,9 +33,7 @@ namespace MicroDocum.Analyzers
         public static Type[] GetLinks(Type message)
         {
             var interfaces = message.GetInterfaces().ToArray();
-            var uniq = interfaces.Select(x => x.MetadataToken).Distinct();
-            return uniq.Select(u => interfaces.First(x=> x.MetadataToken == u))
-                .ToArray();
+            return interfaces;
         }
 
         public static Type[] GenericTypeArguments(Type type)
@@ -110,9 +108,7 @@ namespace MicroDocum.Analyzers
         public static Type[] GetLinks(Type message)
         {
             var interfaces = message.GetTypeInfo().ImplementedInterfaces.ToArray();
-            var uniq = interfaces.Select(x => x.GetTypeInfo().MetadataToken).Distinct();
-            return uniq.Select(u => interfaces.First(x => x.GetTypeInfo().MetadataToken == u))
-                .ToArray();
+            return interfaces;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
