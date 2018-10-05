@@ -2,7 +2,6 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/2x7gb0ggy8qac5lw/branch/master?svg=true)](https://ci.appveyor.com/project/RouR/microdocum/branch/master)
 [![AppVeyor tests](https://img.shields.io/appveyor/tests/RouR/microdocum.svg)](https://ci.appveyor.com/project/RouR/microdocum/build/tests)
-[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=microdocum&metric=alert_status)](https://sonarcloud.io/dashboard?id=microdocum)
 
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=microdocum&metric=code_smells)](https://sonarcloud.io/dashboard?id=microdocum)
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=microdocum&metric=bugs)](https://sonarcloud.io/dashboard?id=microdocum)
