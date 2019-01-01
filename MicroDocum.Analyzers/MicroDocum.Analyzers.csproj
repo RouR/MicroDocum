@@ -20,5 +20,6 @@ Using Reflections. Find all the classes, which have a custom attribute. Get thei
 		<FrameworkPathOverride Condition="'$(TargetFramework)' == 'net35'">C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v3.5\Profile\Client</FrameworkPathOverride>
 		<Version>1.2.0</Version>
 		<PackageProjectUrl>https://github.com/RouR/MicroDocum</PackageProjectUrl>
+		<AssemblyVersion>1.3.0.0</AssemblyVersion>
 	</PropertyGroup>
 </Project>
