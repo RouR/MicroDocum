@@ -19,7 +19,7 @@ cache:
 deploy:
   provider: NuGet  
   api_key:
-    secure: A41k5VXQkOwWpWcjY6Siu3R2Z4cp25V3lLv3sCw6g/T9NN6UDIH5UhTH+jRk5GE1
+    secure: qdrVkSDGkMOzE5BHe8Vgsw8AbNuleevKC1oTECdc3JfNDQxXy2heBJ0VyIpU9BA6
   skip_symbols: false  
   artifact: /.*MicroDocum.*\.nupkg/ 
   on:
