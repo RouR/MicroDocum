@@ -73,3 +73,8 @@ var wrapper = new GraphGeneration(getStartProcessQuery,
 byte[] bytes = wrapper.GenerateGraph(graphwizFileData, GraphVizWrapper.Enums.GraphReturnType.Png);
 SaveResultImage(bytes, $"./{TestContext.CurrentContext.Test.FullName}.png");
 ```
+
+# Example
+https://github.com/RouR/ToDo-ToBuy/blob/ff367c92ce21d1bf9ebea40438965d6fa1c9d23d/build/Microdocum.cs#L37
+https://github.com/RouR/ToDo-ToBuy/blob/ff367c92ce21d1bf9ebea40438965d6fa1c9d23d/DTO_routing.png
+![example](https://raw.githubusercontent.com/RouR/ToDo-ToBuy/ff367c92ce21d1bf9ebea40438965d6fa1c9d23d/DTO_routing.png)
