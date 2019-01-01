@@ -32,7 +32,7 @@ namespace MicroDocum.Analyzers.Models
                     throw new ArgumentNullException(nameof(node));
 
                 if (Nodes.Any(x => x.Id == node.Id))
-                    throw new DuplicateException(node.Id);
+                    throw new DuplicateNodeException(node.Id);
             }
 
             Nodes.Add(node);
@@ -137,6 +137,17 @@ namespace MicroDocum.Analyzers.Models
                 this[nodeToEntry].IsLoop = true;
             }
 
+            if (CheckArguments)
+            {
+                if (Edges.Any(x => x.FromId == from.Id && x.ToId == to.Id))
+                    throw new DuplicateEdgeException(from.Id, to.Id);
+            }
+            else
+            {
+                //check and skip
+                if (Edges.Any(x => x.FromId == from.Id && x.ToId == to.Id))
+                    return;
+            }
             Edges.Add(new EdgeType<TE>(from.Id, to.Id, data));
         }
 

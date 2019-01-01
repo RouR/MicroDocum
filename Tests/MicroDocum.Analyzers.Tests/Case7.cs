@@ -32,12 +32,14 @@ namespace MicroDocum.Analyzers.Tests
             public Guid Data { get; set; }
         }
         [ServiceName("Account")]
-        public class CreateUserRequest: IProduce<CreateUserResponse>
+        [ProduceDTO(typeof(CreateUserResponse))]
+        public class CreateUserRequest
         {
         
         }
         [ServiceName("Account")]
-        public class CreateUserResponse: IErrorable<UserEntity>, IProduce<RegisterResponse>
+        [ProduceDTO(typeof(RegisterResponse))]
+        public class CreateUserResponse: IErrorable<UserEntity>
         {
             public bool HasError { get; set; }
             public string Message { get; set; }

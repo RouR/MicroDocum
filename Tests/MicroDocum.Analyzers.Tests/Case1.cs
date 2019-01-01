@@ -14,7 +14,8 @@ namespace MicroDocum.Analyzers.Tests
     {
         [TTL(1.625)]
         [ServiceName("EndpointName")]
-        public class Class1 : IProduce<Struct1>, IProduceOnce<IInterface1>
+        [ProduceDTO(typeof(Struct1))]
+        public class Class1 : IProduceOnce<IInterface1>
         {
         }
 

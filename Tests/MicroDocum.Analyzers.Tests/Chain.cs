@@ -32,8 +32,8 @@ namespace MicroDocum.Analyzers.Tests
             var chain = new Chain<int, string>();
             chain.AddNode(new ChainNode<int>("1", 1));
             //When
-            Assert.Throws<DuplicateException>(() => chain.AddNode(new ChainNode<int>("1", 2)));
-            Assert.Throws<DuplicateException>(() => chain.AddNode(new ChainNode<int>("1", 1)));
+            Assert.Throws<DuplicateNodeException>(() => chain.AddNode(new ChainNode<int>("1", 2)));
+            Assert.Throws<DuplicateNodeException>(() => chain.AddNode(new ChainNode<int>("1", 1)));
         }
 
         [Test]
