@@ -11,7 +11,5 @@ namespace MicroDocum.Graphviz.Interfaces
         IList<NodeRule<MessageInfo, T>> DefaultNodeRules();
         IList<SpecialRule<MessageInfo, T>> SpecialRulesPreProcess();
         IList<SpecialRule<MessageInfo, T>> SpecialRulesPostProcess();
-
-        bool BorderedChains();
     }
 }

@@ -31,8 +31,8 @@ namespace MicroDocum.Graphviz
 
             foreach (var chain in map.SplitChains())
             {
-                result.AppendLine("\n\n");
-                result.AppendLine(GetSubgraph(chain));
+                result.AppendLine("\n");
+                result.AppendLine(ProcessChain(chain));
             }
 
             result.AppendLine(SpecialRulesPostProcess(map));
@@ -79,13 +79,9 @@ namespace MicroDocum.Graphviz
             return sb.ToString();
         }
 
-        private string GetSubgraph(IChain<MessageInfo, LinkInfo<T>> chain)
+        private string ProcessChain(IChain<MessageInfo, LinkInfo<T>> chain)
         {
             var sb = new StringBuilder();
-
-            //First the name of the subgraphs are important, to be visually separated they must be prefixed with cluster_
-            var subgraphName = ((_theme.BorderedChains() ? $"cluster_" : "") + Guid.NewGuid()).NormalizeGraphvizNames();
-            sb.AppendLine($"subgraph {subgraphName} {{");
 
             foreach (var edge in chain.Edges)
             {
@@ -110,7 +106,6 @@ namespace MicroDocum.Graphviz
 
             }
             sb.AppendLine();
-            sb.AppendLine("}");
 
             return sb.ToString();
         }

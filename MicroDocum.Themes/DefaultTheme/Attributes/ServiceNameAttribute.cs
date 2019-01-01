@@ -54,14 +54,18 @@ namespace MicroDocum.Themes.DefaultTheme.Attributes
             {
                 var sb = new StringBuilder();
 
+                var idx = 0;
                 foreach (var sname in DefaultTheme.ServiceNames)
                 {
                     if (sname.Value.Count >= 2)
                     {
-                        sb.Append("\n{");
-                        sb.Append($"/* ServiceName {sname.Key}*/ rank=same;");
+                        sb.Append($"\n subgraph cluster_{idx++}" + "{");
+                        sb.AppendLine($"\t /* ServiceName {sname.Key}*/ rank=same;");
+                        sb.AppendLine($"\t node [style=filled];");
+                        sb.AppendLine($"\t color=blue;");
+                        sb.AppendLine($"\t label = \"{sname.Key}\";\n");
                         sb.Append(string.Join(", ", sname.Value.Distinct().ToArray()));
-                        sb.Append("}\n");
+                        sb.Append("\n}\n");
                     }
                 }
 

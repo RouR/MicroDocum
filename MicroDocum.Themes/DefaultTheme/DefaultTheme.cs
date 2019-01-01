@@ -212,12 +212,6 @@ namespace MicroDocum.Themes.DefaultTheme
             };
         }
 
-        public bool BorderedChains()
-        {
-            //It can work wrong with rule of ServiceNameAttribute due to additional subgraphs;
-            return false;
-        }
-
         /// <summary>
         /// HTML-Like Labels
         /// https://graphviz.gitlab.io/_pages/doc/info/shapes.html#html
