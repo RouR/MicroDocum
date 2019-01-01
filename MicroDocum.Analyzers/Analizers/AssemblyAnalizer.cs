@@ -78,18 +78,19 @@ namespace MicroDocum.Analyzers.Analizers
                         var interfaces = CompilerUtils.GetLinks(message);
                         interfaces = RemoveBaseTypes(interfaces);
 
-                        foreach (var iface in interfaces)
+                        var msgAttributes = CompilerUtils.GetAttributes(message);
+                        
+                        var links = _theme.GetThemedLinks(message, msgAttributes, interfaces, result);
+
+                        if(links == null || links.Length == 0)
+                            continue;
+
+                        foreach (var linkMetadata in links)
                         {
-                            var links = _theme.GetThemedLinks(iface, message);
-
-                            if(links == null || links.Length == 0)
-                                continue;
-
-                            foreach (var linkMetadata in links)
-                            {
-                                result.AddDirectedEdge(result[message.FullName], result[linkMetadata.ToMessage.FullName], linkMetadata.Link);
-                            }
+                            result.AddDirectedEdge(result[message.FullName], result[linkMetadata.ToMessage.FullName], linkMetadata.Link);
                         }
+                        
+                       
                     }
                 }
             }

@@ -16,7 +16,7 @@ namespace MicroDocum.Themes.Tests
             //Given
             var assembly = AppDomain.CurrentDomain.GetAssemblies()
                 .Single(x => x.FullName.StartsWith("MicroDocum.Themes,"));
-            var defined = assembly.DefinedTypes.Where(x => x.Name.EndsWith("Attribute")).ToArray();
+            var defined = assembly.DefinedTypes.Where(x => x.Name.EndsWith("Attribute") && !x.Name.StartsWith("Produce")).ToArray();
             Assume.That(defined.Length >= 5, defined.Length.ToString());
             //When
             var actual = _theme.GetAvailableThemeAttributes();

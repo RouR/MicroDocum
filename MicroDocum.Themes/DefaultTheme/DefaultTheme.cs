@@ -10,7 +10,7 @@ using MicroDocum.Themes.DefaultTheme.Interfaces;
 
 namespace MicroDocum.Themes.DefaultTheme
 {
-    public class DefaultTheme: IGraphvizTheme<DefaultLinkStyle>
+    public class DefaultTheme : IGraphvizTheme<DefaultLinkStyle>
     {
         public Type[] GetAvailableThemeAttributes()
         {
@@ -24,7 +24,107 @@ namespace MicroDocum.Themes.DefaultTheme
             };
         }
 
-        public LinkMetadata<DefaultLinkStyle>[] GetThemedLinks(Type iface, Type fromMessage)
+        public LinkMetadata<DefaultLinkStyle>[] GetThemedLinks(Type dto, Attribute[] attributes, Type[] interfaces,
+            Chain<MessageInfo, LinkInfo<DefaultLinkStyle>> map)
+        {
+            var result = new List<LinkMetadata<DefaultLinkStyle>>();
+
+            result.AddRange(ProcessInterfaces(dto, interfaces));
+            result.AddRange(ProcessAttributes(dto, attributes, map));
+
+
+            return result.ToArray();
+        }
+
+        private static List<LinkMetadata<DefaultLinkStyle>> ProcessInterfaces(Type dto, Type[] interfaces)
+        {
+            var result = new List<LinkMetadata<DefaultLinkStyle>>();
+            var dict = GetMappingInterfaces();
+            foreach (var iface in interfaces)
+            {
+                if (!CompilerUtils.IsGeneric(iface))
+                    continue;
+
+                var genericType = iface.GetGenericTypeDefinition();
+
+                if (!dict.ContainsKey(genericType))
+                    continue;
+
+                var style = dict[genericType];
+
+                var argTypes = CompilerUtils.GenericTypeArguments(iface);
+
+                if (argTypes.Length > 1 && genericType == typeof(IProduce<,>))
+                    foreach (var argType in argTypes)
+                    {
+                        result.Add(new LinkMetadata<DefaultLinkStyle>()
+                        {
+                            FromMessage = dto,
+                            ToMessage = argType,
+                            Link = style
+                        });
+                    }
+                else
+                {
+                    result.Add(new LinkMetadata<DefaultLinkStyle>()
+                    {
+                        FromMessage = dto,
+                        ToMessage = argTypes.Single(),
+                        Link = style
+                    });
+                }
+            }
+
+            return result;
+        }
+
+        private static List<LinkMetadata<DefaultLinkStyle>> ProcessAttributes(Type dto, Attribute[] attributes,
+            Chain<MessageInfo, LinkInfo<DefaultLinkStyle>> map)
+        {
+            var result = new List<LinkMetadata<DefaultLinkStyle>>();
+            var dict =
+                new Dictionary<Type, LinkInfo<DefaultLinkStyle>>()
+                {
+                    {
+                        typeof(ProduceDTOAttribute),
+                        new LinkInfo<DefaultLinkStyle>
+                        {
+                            Style = DefaultLinkStyle.Default
+                        }
+                    }
+                };
+            var dict2 =
+                new Dictionary<Type, Func<Attribute, Chain<MessageInfo, LinkInfo<DefaultLinkStyle>>, Type>>()
+                {
+                    {
+                        typeof(ProduceDTOAttribute),
+                        ProduceDTOAttribute.GetLink()
+                    }
+                };
+
+            foreach (var attr in attributes)
+            {
+                if (!dict.ContainsKey(attr.GetType()))
+                    continue;
+                
+                if (!dict2.ContainsKey(attr.GetType()))
+                    continue;
+
+                var linkToDTO = dict2[attr.GetType()](attr, map);
+
+                var style = dict[attr.GetType()];
+                result.Add(new LinkMetadata<DefaultLinkStyle>()
+                {
+                    FromMessage = dto,
+                    ToMessage = linkToDTO,
+                    Link = style
+                });
+            }
+
+            return result;
+        }
+
+        private static Dictionary<Type, LinkInfo<DefaultLinkStyle>> GetMappingInterfaces()
         {
             var dict = new Dictionary<Type, LinkInfo<DefaultLinkStyle>>
             {
@@ -67,42 +167,7 @@ namespace MicroDocum.Themes.DefaultTheme
                     }
                 }
             };
-
-            if (!CompilerUtils.IsGeneric(iface))
-                return new LinkMetadata<DefaultLinkStyle>[0];
-         
-            var genericType = iface.GetGenericTypeDefinition();
-
-            if (!dict.ContainsKey(genericType))
-                return new LinkMetadata<DefaultLinkStyle>[0];
-                
-            var style = dict[genericType];
-
-            var result = new List<LinkMetadata<DefaultLinkStyle>>();
-
-            var argTypes = CompilerUtils.GenericTypeArguments(iface);
-
-            if(argTypes.Length > 1 && genericType == typeof(IProduce<,>))
-                foreach (var argType in argTypes)
-                {
-                    result.Add(new LinkMetadata<DefaultLinkStyle>()
-                    {
-                        FromMessage = fromMessage,
-                        ToMessage = argType,
-                        Link = style
-                    });
-                }
-            else
-            {
-                result.Add(new LinkMetadata<DefaultLinkStyle>()
-                {
-                    FromMessage = fromMessage,
-                    ToMessage = argTypes.Single(),
-                    Link = style
-                });
-            }
-
-            return result.ToArray();
+            return dict;
         }
 
         public IList<LinkRule<LinkInfo<DefaultLinkStyle>>> DefaultLinkRules()
@@ -147,12 +212,6 @@ namespace MicroDocum.Themes.DefaultTheme
             };
         }
 
-        public bool BorderedChains()
-        {
-            //It can work wrong with rule of ServiceNameAttribute due to additional subgraphs;
-            return false;
-        }
-
         /// <summary>
         /// HTML-Like Labels
         /// https://graphviz.gitlab.io/_pages/doc/info/shapes.html#html
@@ -161,7 +220,7 @@ namespace MicroDocum.Themes.DefaultTheme
         /// <returns></returns>
         public static string CheckAndWrapToHtmlTable(string labelText)
         {
-            if (!labelText.StartsWith("<<table",StringComparison.CurrentCultureIgnoreCase))
+            if (!labelText.StartsWith("<<table", StringComparison.CurrentCultureIgnoreCase))
                 return WrapToHtmlTable(labelText);
             else
                 return labelText;
@@ -169,7 +228,8 @@ namespace MicroDocum.Themes.DefaultTheme
 
         private static string WrapToHtmlTable(string labelText)
         {
-            return $"<<table border='0' cellborder='0'><tr><td align='center'><font color='black' point-size='14'>{labelText.Replace("\n","<BR/>")}</font></td></tr></table>>";
+            return
+                $"<<table border='0' cellborder='0'><tr><td align='center'><font color='black' point-size='14'>{labelText.Replace("\n", "<BR/>")}</font></td></tr></table>>";
         }
 
         public static string AddNewRow(string labelText, string rowText)
@@ -180,6 +240,6 @@ namespace MicroDocum.Themes.DefaultTheme
             return labelText;
         }
 
-        internal static Dictionary<string,List<string>> ServiceNames = new Dictionary<string, List<string>>();
+        internal static Dictionary<string, List<string>> ServiceNames = new Dictionary<string, List<string>>();
     }
 }

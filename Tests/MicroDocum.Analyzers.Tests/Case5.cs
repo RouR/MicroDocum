@@ -17,7 +17,8 @@ namespace MicroDocum.Analyzers.Tests
     {
 #region DTO
         [ServiceName("ToDoSrv")]
-        private class CreateTODO : TodoEntity, IProduce<SaveTODOResponse>
+        [ProduceDTO(typeof(SaveTODOResponse))]
+        private class CreateTODO : TodoEntity
         {
         }
         [ServiceName("ToDoSrv")]

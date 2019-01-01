@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using MicroDocum.Analyzers.Models;
 
 namespace MicroDocum.Analyzers.Interfaces
@@ -7,7 +8,6 @@ namespace MicroDocum.Analyzers.Interfaces
     {
         Type[] GetAvailableThemeAttributes();
 
-        LinkMetadata<TLinkStyle>[] GetThemedLinks(Type iface, Type fromMessage);
-       
+        LinkMetadata<TLinkStyle>[] GetThemedLinks(Type dto, Attribute[] attributes, Type[] interfaces, Chain<MessageInfo, LinkInfo<TLinkStyle>> map);
     }
 }
